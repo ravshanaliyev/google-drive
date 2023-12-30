@@ -68,10 +68,10 @@
 
 @layer base {
   * {
-    @apply tailwind.config.tsborder-border;
+    @apply border-border;
   }
 
   body {
-    @apply tailwind.config.tsbg-background tailwind.config.tstext-foreground;
+    @apply bg-background text-foreground;
   }
 }
