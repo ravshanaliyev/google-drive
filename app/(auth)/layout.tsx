@@ -1,10 +1,11 @@
+import Navbar from '@/components/shared/navbar'
 import { ChildProps } from '@/types'
 import React from 'react'
 
 const AuthLayout = ({ children }: ChildProps) => {
     return (
         <div>
-            <p>Navbar</p>
+            <Navbar />
             <p>Sidebar</p>
             {children}
         </div>
