@@ -23,7 +23,7 @@ const UserBox = () => {
             <DropdownMenuTrigger asChild>
                 <div role="button">
                     <Avatar>
-                        <AvatarImage src={user?.imageUrl} width={32} height={32} />
+                        <AvatarImage src={user?.imageUrl} width={25} height={25} />
                     </Avatar>
                 </div>
             </DropdownMenuTrigger>
