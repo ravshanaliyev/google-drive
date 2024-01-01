@@ -28,8 +28,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
             storageKey='google-drive'>
-            <Navbar />
-            <Sidebar />
             <Toaster position="top-center" />
             <ModalProvider />
             {children}

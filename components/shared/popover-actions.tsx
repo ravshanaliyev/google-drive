@@ -9,11 +9,13 @@ import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/fi
 import { db, storage } from "@/lib/firebase";
 import { useUser } from "@clerk/nextjs";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useRouter } from "next/navigation";
 
 const PopoverActions = () => {
     const { user } = useUser();
     const { onOpen } = useFolder()
     const inputRef = useRef<HTMLInputElement>(null)
+    const router = useRouter()
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files) return;
@@ -40,6 +42,8 @@ const PopoverActions = () => {
                     updateDoc(doc(db, "files", docs.id), {
                         image: url,
                     });
+                }, () => {
+                    router.refresh()
                 });
             });
         });
