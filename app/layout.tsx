@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import Navbar from '@/components/shared/navbar'
 import Sidebar from '@/components/shared/sidebar'
 import ModalProvider from '@/components/providers/modal-provider'
+import { Toaster } from 'sonner'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
             storageKey='google-drive'>
             <Navbar />
             <Sidebar />
+            <Toaster position="top-center" />
             <ModalProvider />
             {children}
           </ThemeProvider>
