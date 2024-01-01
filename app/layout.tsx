@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import Navbar from '@/components/shared/navbar'
 import Sidebar from '@/components/shared/sidebar'
+import ModalProvider from '@/components/providers/modal-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
             storageKey='google-drive'>
             <Navbar />
             <Sidebar />
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>
