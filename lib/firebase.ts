@@ -1,5 +1,6 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore'
+import { getStorage } from "firebase/storage";
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: "drive-5edb5.firebaseapp.com",
@@ -11,4 +12,5 @@ const firebaseConfig = {
 
 !getApps().length ? initializeApp(firebaseConfig) : getApp()
 const db = getFirestore();
-export { db }
+const storage = getStorage();
+export { db, storage }
