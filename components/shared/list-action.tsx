@@ -31,6 +31,7 @@ const ListAction = ({ item, onStartEditing }: ListActionProps) => {
         const promise = setDoc(ref, {
             ...item,
             isArchive: true,
+            isArhive: true,
             archivedTime: new Date(),
         }).then(() => refresh());
 
