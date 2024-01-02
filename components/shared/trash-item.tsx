@@ -30,6 +30,7 @@ const TrashItem = ({ item }: TrashItemProps) => {
             ...item,
             isArchive: false,
             archivedTime: null,
+            isArhive: false,
         }).then(() => refresh());
 
         toast.promise(promise, {
@@ -78,7 +79,7 @@ const TrashItem = ({ item }: TrashItemProps) => {
                 </div>
             </TableCell>
             <TableCell>
-                {format(new Date(item.archivedTime.seconds * 1000), "MMM dd, hh:mm a")}
+                {format(new Date(item.timestamp.seconds * 1000), "MMM dd, hh:mm a")}
             </TableCell>
             <TableCell>{item.size ? byteConverter(item.size) : <Minus />}</TableCell>
             <TableCell className="flex justify-end group items-center space-x-2">
