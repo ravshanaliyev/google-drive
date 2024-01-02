@@ -27,7 +27,6 @@ const ListAction = ({ item, onStartEditing }: ListActionProps) => {
 
     const onDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
-
         const ref = doc(db, type, item.id);
         const promise = setDoc(ref, {
             ...item,
