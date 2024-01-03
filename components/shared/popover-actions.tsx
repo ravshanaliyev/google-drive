@@ -29,7 +29,9 @@ const PopoverActions = () => {
                 image = e.target?.result as string;
             };
         }
-        const promise = addDoc(collection(db, "files"), {
+        const folderId = documentId as string;
+        const collectionRefs = !documentId ? collection(db, "files") : collection(db, "folders", folderId, "files");
+        const promise = addDoc(collectionRefs, {
             name: file.name,
             type: file.type,
             size: file.size,
@@ -37,10 +39,11 @@ const PopoverActions = () => {
             timestamp: serverTimestamp(),
             isArchive: false,
         }).then((docs) => {
-            const refs = ref(storage, `files/${docs.id}/image`);
+            const refs = documentId ? ref(storage, `files/${folderId}/${docs.id}/image`) : ref(storage, `files/${docs.id}/image`);
             uploadString(refs, image, "data_url").then(() => {
                 getDownloadURL(refs).then((url) => {
-                    updateDoc(doc(db, "files", docs.id), {
+                    const update = !documentId ? doc(db, "files", docs.id) : doc(db, "folders", folderId, "files", docs.id);
+                    updateDoc(update, {
                         image: url,
                     });
                 }, () => {
