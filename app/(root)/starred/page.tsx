@@ -13,28 +13,12 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { auth } from '@clerk/nextjs';
 import ListItem from '@/components/shared/list-item';
-const getFolders = async (uid: string, type: "folders") => {
+const getData = async (uid: string, type: "files" | "folders") => {
     let data: any[] = [];
     const q = query(
         collection(db, type),
         where("uid", "==", uid),
-        where("isArhive", "==", false),
-        where("isStar", "==", true)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        data.push({ ...doc.data(), id: doc.id });
-    });
-
-    return data;
-};
-const getFiles = async (uid: string, type: "files") => {
-    let data: any[] = [];
-    const q = query(
-        collection(db, type),
-        where("uid", "==", uid),
-        where("isArchive", "==", false),
-        where("isStar", "==", true)
+        where("isArchive", "==", false)
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -46,8 +30,8 @@ const getFiles = async (uid: string, type: "files") => {
 
 const StarredPage = async () => {
     const { userId } = auth();
-    const folders = await getFolders(userId!, "folders");
-    const files = await getFiles(userId!, "files");
+    const folders = await getData(userId!, "folders");
+    const files = await getData(userId!, "files");
     return (
         <>
             <Header label='Starred' />

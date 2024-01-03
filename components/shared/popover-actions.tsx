@@ -15,8 +15,9 @@ const PopoverActions = () => {
     const { user } = useUser();
     const { onOpen } = useFolder()
     const inputRef = useRef<HTMLInputElement>(null)
-    const router = useRouter()
+    const { refresh } = useRouter()
     const { documentId } = useParams()
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files) return;
@@ -42,12 +43,12 @@ const PopoverActions = () => {
             const refs = documentId ? ref(storage, `files/${folderId}/${docs.id}/image`) : ref(storage, `files/${docs.id}/image`);
             uploadString(refs, image, "data_url").then(() => {
                 getDownloadURL(refs).then((url) => {
-                    const update = !documentId ? doc(db, "files", docs.id) : doc(db, "folders", folderId, "files", docs.id);
-                    updateDoc(update, {
+                    const docRefs = documentId ? doc(db, "folders", folderId, "files", docs.id) : doc(db, "files", docs.id);
+                    updateDoc(docRefs, {
                         image: url,
                     });
                 }, () => {
-                    router.refresh()
+                    refresh();
                 });
             });
         });

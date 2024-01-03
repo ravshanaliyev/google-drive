@@ -25,9 +25,9 @@ const getFiles = async (folderId: string, uid: string) => {
 
     return files;
 }
-const DocumentPage = async ({ params }: DocIdProps) => {
+const DocumentIdPage = async ({ params }: DocIdProps) => {
     const folder = await getFolder(params.documentId) as IFolderAndFile;
-    const files = await getFiles(params.documentId, folder.uid)
+    const files = await getFiles(params.documentId, folder?.uid as string)
 
     return (
         <>
@@ -45,4 +45,4 @@ const DocumentPage = async ({ params }: DocIdProps) => {
     )
 }
 
-export default DocumentPage
+export default DocumentIdPage

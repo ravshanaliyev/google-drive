@@ -5,21 +5,7 @@ import { auth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React from "react";
 
-const getFolders = async (uid: string, type: "folders") => {
-  let data: any[] = [];
-  const q = query(
-    collection(db, type),
-    where("uid", "==", uid),
-    where("isArhive", "==", false)
-  );
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    data.push({ ...doc.data(), id: doc.id });
-  });
-
-  return data;
-};
-const getFiles = async (uid: string, type: "files") => {
+const getData = async (uid: string, type: "files" | "folders") => {
   let data: any[] = [];
   const q = query(
     collection(db, type),
@@ -37,8 +23,9 @@ const getFiles = async (uid: string, type: "files") => {
 
 const HomePage = async () => {
   const { userId } = auth();
-  const folders = await getFolders(userId!, "folders");
-  const files = await getFiles(userId!, "files");
+  const folders = await getData(userId!, "folders");
+  const files = await getData(userId!, "files");
+
   return (
     <>
       <Header label={"My drive"} isHome />
