@@ -1,5 +1,5 @@
 "use client"
-import { FileUp, Folder, FolderUp } from "lucide-react";
+import { FileUp, Folder, FolderUp, Star, Trash } from "lucide-react";
 import React, { useRef } from "react";
 import { Separator } from "../ui/separator";
 import { useFolder } from "@/hooks/use-folder";
@@ -9,13 +9,14 @@ import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/fi
 import { db, storage } from "@/lib/firebase";
 import { useUser } from "@clerk/nextjs";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const PopoverActions = () => {
     const { user } = useUser();
     const { onOpen } = useFolder()
     const inputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
+    const { documentId } = useParams()
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files) return;
@@ -56,15 +57,21 @@ const PopoverActions = () => {
     }
     return (
         <>
-            <div
-                className="flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm"
-                role="button"
-                onClick={onOpen}
-            >
-                <Folder className="w-4 h-4" />
-                <span>New folder</span>
-            </div>
-            <Separator />
+            {
+                !documentId && (
+                    <>
+                        <div
+                            className="flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm"
+                            role="button"
+                            onClick={onOpen}
+                        >
+                            <Folder className="w-4 h-4" />
+                            <span>New folder</span>
+                        </div>
+                        <Separator />
+                    </>
+                )
+            }
             <label>
                 <div
                     className="flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm"
@@ -85,6 +92,25 @@ const PopoverActions = () => {
                 </div>
                 <Input type="file" className="hidden" accept="image/*" ref={inputRef} onChange={onChange} />
             </label>
+            {documentId && (
+                <>
+                    <Separator />
+                    <div
+                        className="flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm"
+                        role="button"
+                    >
+                        <Trash className="w-4 h-4" />
+                        <span>Trash</span>
+                    </div>
+                    <div
+                        className="flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm"
+                        role="button"
+                    >
+                        <Star className="w-4 h-4" />
+                        <span>Starred</span>
+                    </div>
+                </>
+            )}
         </>
     );
 };
