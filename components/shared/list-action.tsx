@@ -24,8 +24,7 @@ const ListAction = ({ item, onStartEditing }: ListActionProps) => {
     const { refresh } = useRouter();
     const { documentId } = useParams()
     const folderId = documentId as string
-    const type = item.size ? "files" : "folders";
-    const ref = documentId ? doc(db, "folders", folderId, "files", item.id) : doc(db, type, item.id)
+    const ref = documentId ? doc(db, "folders", folderId, "files", item.id) : doc(db, "files", item.id)
 
     const onDelete = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
