@@ -40,7 +40,7 @@ const DocumentIdPage = async ({ params }: DocIdProps) => {
 
     return (
         <>
-            <Header label={folder.name} isHome />
+            <Header label={folder.name} isHome isDocument />
             {files.length === 0 ? (
                 <Empty />
             ) : (

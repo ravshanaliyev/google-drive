@@ -8,9 +8,10 @@ import { useLayout } from "@/hooks/use-layout";
 interface HeaderProps {
     label: string;
     isHome?: boolean;
+    isDocument?: boolean;
 }
 
-const Header = ({ label, isHome }: HeaderProps) => {
+const Header = ({ label, isHome, isDocument }: HeaderProps) => {
     const { setLayout, layout } = useLayout()
     return (
         <div className="w-full flex items-center justify-between">
@@ -30,7 +31,7 @@ const Header = ({ label, isHome }: HeaderProps) => {
                 <div className="text-xl capitalize">{label}</div>
             )}
 
-            {isHome && (
+            {isHome && !isDocument && (
                 <div className="flex items-center space-x-2">
                     {
                         layout === "list" ? (
