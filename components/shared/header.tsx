@@ -1,18 +1,21 @@
 "use client";
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { ChevronDown, Info, LayoutPanelTop, TableProperties } from "lucide-react";
+import { ArrowBigLeftDash, ChevronDown, Info, LayoutPanelTop, TableProperties } from "lucide-react";
 import PopoverActions from "./popover-actions";
 import { useLayout } from "@/hooks/use-layout";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
     label: string;
     isHome?: boolean;
     isDocument?: boolean;
+    isDocumentPage?: boolean;
 }
 
-const Header = ({ label, isHome, isDocument }: HeaderProps) => {
+const Header = ({ label, isHome, isDocument, isDocumentPage }: HeaderProps) => {
     const { setLayout, layout } = useLayout()
+    const router = useRouter()
     return (
         <div className="w-full flex items-center justify-between">
             {isHome ? (
@@ -28,7 +31,16 @@ const Header = ({ label, isHome, isDocument }: HeaderProps) => {
                     </PopoverContent>
                 </Popover>
             ) : (
-                <div className="text-xl capitalize">{label}</div>
+                <>
+                    {isDocumentPage ? (
+                        <div className="flex items-center space-x-2 hover:bg-secondary transition px-4 py-2 rounded-full" role="button" onClick={() => router.back()}>
+                            <ArrowBigLeftDash className="w-5 h-5" />
+                            <div className="text-xl capitalize">{label}</div>
+                        </div>
+                    ) : (
+                        <div className="text-xl capitalize">{label}</div>
+                    )}
+                </>
             )}
 
             {isHome && !isDocument && (

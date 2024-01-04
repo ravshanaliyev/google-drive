@@ -29,7 +29,7 @@ const DocumentStarredPage = async ({ params }: DocIdProps) => {
 
     return (
         <>
-            <Header label="Starred" isDocument isHome={false} />
+            <Header label="Starred" isDocumentPage isHome={false} />
             {files.length === 0 ? (
                 <Empty />
             ) : (
